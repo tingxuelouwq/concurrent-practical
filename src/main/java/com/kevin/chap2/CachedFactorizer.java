@@ -8,7 +8,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.math.BigInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 类名: CachedFactorizer<br/>
