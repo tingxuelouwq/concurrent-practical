@@ -3,6 +3,7 @@ package com.kevin.chap4;
 import com.kevin.annotation.ThreadSafe;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,5 +38,25 @@ public class DelegatingVehicleTracker {
         if (locations.replace(id, new Point(x, y)) == null) {
             throw new IllegalArgumentException("invalid vehicle name: " + id);
         }
+    }
+
+    public Map<String, Point> getLocations2() {
+        return Collections.unmodifiableMap(new HashMap<>(locations));
+    }
+
+    public static void main(String[] args) {
+        Point point = new Point(1, 1);
+        Map<String, Point> map = new HashMap<>();
+        map.put("bi", point);
+        DelegatingVehicleTracker tracker = new DelegatingVehicleTracker(map);
+        Map<String, Point> locations = tracker.getLocations();
+        locations.values().forEach(System.out::println);
+        tracker.setLocation("bi", 1, 2);
+        locations.values().forEach(System.out::println);
+
+        Map<String, Point> locations2 = tracker.getLocations2();
+        locations2.values().forEach(System.out::println);
+        tracker.setLocation("bi", 1, 3);
+        locations2.values().forEach(System.out::println);
     }
 }
